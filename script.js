@@ -65,7 +65,6 @@ document.getElementById('publicar-btn').addEventListener('click', function() {
     const contenido = document.getElementById('contenido').value;
 
     const archivos = document.getElementById('archivo').files; // Obtener archivos adjuntos
-    let adjuntos = [];
 
     if (titulo.trim() && contenido.trim()) {
         const nuevaPublicacion = {
@@ -77,6 +76,7 @@ document.getElementById('publicar-btn').addEventListener('click', function() {
         };
 
         if (archivos.length > 0) {
+            let archivosProcesados = 0;
             for (let i = 0; i < archivos.length; i++) {
                 const archivo = archivos[i];
                 const reader = new FileReader();
@@ -87,7 +87,8 @@ document.getElementById('publicar-btn').addEventListener('click', function() {
                         tipo: archivo.type,
                         contenido: e.target.result
                     });
-                    if (i === archivos.length - 1) {
+                    archivosProcesados++;
+                    if (archivosProcesados === archivos.length) {
                         guardarPublicacion(nuevaPublicacion);
                     }
                 };
@@ -157,4 +158,55 @@ function cargarPublicaciones() {
 }
 
 // Función para agregar publicación al DOM
-fu
+function agregarPublicacion(publicacion) {
+    const publicacionDiv = document.createElement('div');
+    publicacionDiv.classList.add('publicacion');
+
+    const tituloElemento = document.createElement('h3');
+    tituloElemento.textContent = `${publicacion.titulo} (por ${publicacion.usuario} - ${publicacion.fecha})`;
+
+    const contenidoElemento = document.createElement('p');
+    contenidoElemento.textContent = publicacion.contenido;
+
+    publicacionDiv.appendChild(tituloElemento);
+    publicacionDiv.appendChild(contenidoElemento);
+
+    // Mostrar adjuntos si los hay
+    if (publicacion.adjuntos && publicacion.adjuntos.length > 0) {
+        const adjuntosDiv = document.createElement('div');
+        adjuntosDiv.classList.add('adjuntos');
+
+        publicacion.adjuntos.forEach(adjunto => {
+            const adjuntoDiv = document.createElement('div');
+            adjuntoDiv.classList.add('adjunto');
+
+            if (adjunto.tipo.startsWith('image/')) {
+                const img = document.createElement('img');
+                img.src = adjunto.contenido;
+                adjuntoDiv.appendChild(img);
+            } else if (adjunto.tipo.startsWith('video/')) {
+                const video = document.createElement('video');
+                video.src = adjunto.contenido;
+                video.controls = true;
+                adjuntoDiv.appendChild(video);
+            } else {
+                const enlace = document.createElement('a');
+                enlace.href = adjunto.contenido;
+                enlace.download = adjunto.nombre;
+                enlace.textContent = adjunto.nombre;
+                adjuntoDiv.appendChild(enlace);
+            }
+
+            adjuntosDiv.appendChild(adjuntoDiv);
+        });
+
+        publicacionDiv.appendChild(adjuntosDiv);
+    }
+
+    document.getElementById('lista-publicaciones').appendChild(publicacionDiv);
+}
+
+// Verificar si ya hay un usuario logueado
+if (usuarioActual) {
+    mostrarForo();
+}
