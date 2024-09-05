@@ -9,8 +9,8 @@ body {
   background-color: #f0f0f0;
   display: flex;
   justify-content: center;
-  align-items: center;
-  height: 100vh;
+  align-items: flex-start;
+  padding-top: 20px;
 }
 
 .container {
@@ -25,8 +25,10 @@ h1 {
   margin-bottom: 20px;
 }
 
-#formulario-publicacion input, #formulario-publicacion textarea,
-#login-form input, #registro-form input {
+#formulario-publicacion input,
+#formulario-publicacion textarea,
+#login-form input,
+#registro-form input {
   width: 100%;
   padding: 10px;
   margin-bottom: 10px;
@@ -34,7 +36,9 @@ h1 {
   border-radius: 4px;
 }
 
-#publicar-btn, #login-btn, #registro-btn {
+#publicar-btn,
+#login-btn,
+#registro-btn {
   width: 100%;
   padding: 10px;
   background-color: #007bff;
@@ -44,7 +48,9 @@ h1 {
   cursor: pointer;
 }
 
-#publicar-btn:hover, #login-btn:hover, #registro-btn:hover {
+#publicar-btn:hover,
+#login-btn:hover,
+#registro-btn:hover {
   background-color: #0056b3;
 }
 
@@ -75,30 +81,11 @@ span {
   text-decoration: underline;
 }
 
-#login-form, #registro-form {
+#login-form,
+#registro-form {
   margin-bottom: 20px;
 }
-#adjuntos-preview {
-    margin: 10px 0;
-}
 
-#adjuntos-preview img {
-    max-width: 100px;
-    margin-right: 10px;
-}
-
-#adjuntos-preview video {
-    max-width: 200px;
-    margin-right: 10px;
-}
-
-#adjuntos-preview div {
-    display: inline-block;
-    margin-right: 10px;
-    background-color: #f1f1f1;
-    padding: 5px;
-    border-radius: 5px;
-}
 #adjuntos-preview {
   margin: 10px 0;
 }
@@ -119,4 +106,26 @@ span {
   background-color: #f1f1f1;
   padding: 5px;
   border-radius: 5px;
+}
+
+.adjuntos {
+  margin-top: 10px;
+}
+
+.adjunto {
+  margin-bottom: 5px;
+}
+
+.adjunto img,
+.adjunto video {
+  max-width: 100%;
+}
+
+.adjunto a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.adjunto a:hover {
+  text-decoration: underline;
 }
